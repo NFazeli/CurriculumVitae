@@ -10,7 +10,16 @@ jobs:
         uses: dante-ev/latex-action@master
         with:
           root_file: main.tex
-      - uses: actions/upload-artifact@v2
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v2
         with:
           name: cv.pdf
           path: main.pdf
+      - name: Commit and push compiled pdf
+        uses: EndBug/add-and-commit@v4
+        with:
+          add: main.pdf
+          author_name: CI pipeline
+          message: auto-compile
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
